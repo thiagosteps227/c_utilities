@@ -1,0 +1,2 @@
+This is the second file
+Used for tests purposes
