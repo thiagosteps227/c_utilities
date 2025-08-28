@@ -5,26 +5,36 @@ It also includes **unit tests** written with the [Unity Test Framework](https://
 
 ---
 
-## Project Structure
+## Run you Cat command
 
-project/
-│
-├─ Makefile # build instructions
-│
-├─ src/
-│ ├─ cat.c # print_file() implementation
-│ ├─ cat.h # header file
-│ └─ main.c # program entry point
-│
-├─ tests/
-│ └─ test_cat.c # Unity test cases
-│
-└─ Unity/
-└─ src/ # Unity framework source files
-├─ unity.c
-├─ unity.h
-└─ unity_internals.h
+### Read a file
 
+```sh
+gcc cat.c -o cat  # compiles the C program in cat.c and outputs the resulting executable to a file named cat
+
+cat file1.txt  # create a file named file1.txt and this is how you need to run you command
+```
+
+### Read more than one file
+
+```sh
+gcc cat.c -o cat  
+
+./cat file1 file2 ....
+```
+
+### Write to a file
+
+```sh
+gcc cat.c -o cat
+./cat - file.txt # run this command, and following type a text, then the text you type will be saved to your file called file.txt
+```
+### Concatenates two files
+
+```sh
+gcc cat.c -o cat
+./cat dest_file.txt - source_file.txt # run this command, and text in source_file.txt will be added to dest_file.txt
+```
  
 ---
 
@@ -66,3 +76,4 @@ make clean
 
 ```
 Removes the cat and test_cat executables.
+
