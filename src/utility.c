@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "cat.h"
+#include <string.h>
+#include "utility.h"
 
 void print_file(const char* filename)
 {
@@ -66,4 +67,23 @@ void concatenate_files(const char* filename1, const char* filename2)
 
   fclose(file1);
   fclose(file2);
+}
+
+void search_pattern_in_file(const char *filename, const char *pattern)
+{
+  FILE *fp = fopen(filename, "r");
+  if (!fp)
+  {
+    perror("Error opening file");
+    return;
+  }
+
+  char line[256];
+  while (fgets(line, sizeof(line), fp))
+  {
+    // Print lines containing the pattern (like grep)
+    if (strstr(line, pattern))
+      printf("%s", line);
+  }
+  fclose(fp);
 }

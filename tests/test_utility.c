@@ -1,5 +1,5 @@
 #include "unity.h"
-#include "cat.h"
+#include "utility.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -158,7 +158,47 @@ void test_concatenate_files(void)
   remove(filename2);
 }
 
-int main(void)
+void test_search_pattern_in_file(void)
+{
+  const char *filename = "test_pattern.txt";
+
+  // Create a file with multiple lines
+  FILE *file = fopen(filename, "w");
+  fputs("apple\n", file);
+  fputs("banana\n", file);
+  fputs("grape\n", file);
+  fputs("apple pie\n", file);
+  fclose(file);
+
+  // Capture output for pattern "apple"
+  FILE *original_stdout = stdout;
+  FILE *temp = tmpfile();
+  TEST_ASSERT_NOT_NULL_MESSAGE(temp, "Failed to create temp file for stdout capture");
+  stdout = temp;
+
+  search_pattern_in_file(filename, "apple");
+
+  fflush(temp);
+  stdout = original_stdout;
+
+  fseek(temp, 0, SEEK_END);
+  long size = ftell(temp);
+  fseek(temp, 0, SEEK_SET);
+
+  char *buffer = malloc(size + 1);
+  fread(buffer, 1, size, temp);
+  buffer[size] = '\0';
+  fclose(temp);
+
+  // We expect only the lines containing "apple"
+  TEST_ASSERT_EQUAL_STRING("apple\napple pie\n", buffer);
+
+  free(buffer);
+  remove(filename);
+}
+
+    int
+    main(void)
 {
   UNITY_BEGIN();
   RUN_TEST(test_print_file_with_existing_file);
@@ -166,5 +206,6 @@ int main(void)
   RUN_TEST(test_print_file_with_nonexistent_file);
   RUN_TEST(test_write_to_file_should_create_and_write_file);
   RUN_TEST(test_concatenate_files);
+  RUN_TEST(test_search_pattern_in_file);
   return UNITY_END();
 }

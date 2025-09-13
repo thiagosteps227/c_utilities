@@ -1,6 +1,6 @@
 # Compiled binaries
-cat
-test_cat
+utility
+test_utility
 *.o
 *.out
 *.exe
