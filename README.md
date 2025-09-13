@@ -1,4 +1,4 @@
-# C Utililties Program with Unity Tests
+# C Utilities Program with Unity Tests
 
 This project is a simple re-implementation of the Unix `cat` and `grep` command in C.  
 It also includes **unit tests** written with the [Unity Test Framework](https://github.com/ThrowTheSwitch/Unity).
